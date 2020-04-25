@@ -1,28 +1,46 @@
 @page
 @using DevExtremeResponsiveApp.Models
 
-<h2 class="content-block">Home</h2>
+    <div class="demo-container">
+        <div id="page">
 
-@(Html.DevExtreme().DataGrid<SampleOrder>()
-    .ElementAttr(new { @class = "dx-card wide-card" })
-    .DataSource(d => d.Mvc().Controller("SampleData").LoadAction("Get").Key("OrderID"))
-    .ShowBorders(false)
-    .FilterRow(f => f.Visible(true))
-    .FocusedRowEnabled(true)
-    .FocusedRowIndex(0)
-    .ColumnAutoWidth(true)
-    .ColumnHidingEnabled(true)
-    .Columns(columns => {
-        columns.AddFor(m => m.OrderID);
-        columns.AddFor(m => m.OrderDate);
-        columns.AddFor(m => m.CustomerName);
-        columns.AddFor(m => m.ShipCountry);
-        columns.AddFor(m => m.ShipCity);
-    })
-    .Paging(p => p.PageSize(10))
-    .Pager(p => p
-        .ShowPageSizeSelector(true)
-        .AllowedPageSizes(new[] { 5, 10, 20 })
-        .ShowInfo(true)
+            @(Html.DevExtreme().ResponsiveBox()
+        .Width("100%")
+        .Height("100%")
+
+        .Rows(rows =>
+        {
+            rows.Add().Ratio(1);
+            rows.Add().Ratio(2);
+            rows.Add().Ratio(2).Screen("xs sm");
+            rows.Add().Ratio(1);
+        })
+        .Cols(cols =>
+        {
+            cols.Add().Ratio(1);
+            cols.Add().Ratio(2).Screen("md lg");
+            cols.Add().Ratio(1);
+        })
+        .Items(items =>
+        {
+            items.Add().Html("<div class='header'>Header</div>")
+                .Location(location => { location.Add().Col(0).Row(0).Colspan(3).Screen("md lg"); })
+                .Location(location => { location.Add().Col(0).Row(0).Colspan(2).Screen("xs sm"); });
+            items.Add().Html("<div class='content'>Content</div>")
+                .Location(location => { location.Add().Col(1).Row(1).Screen("md lg"); })
+                .Location(location => { location.Add().Col(0).Row(1).Colspan(2).Screen("xs sm"); });
+            items.Add().Html("<div class='left-side-bar'>Left</div>")
+                .Location(location => { location.Add().Col(0).Row(1).Screen("md lg"); })
+                .Location(location => { location.Add().Col(0).Row(2).Screen("xs sm"); });
+            items.Add().Html("<div class='right-side-bar'>Right</div>")
+                .Location(location => { location.Add().Col(2).Row(1).Screen("md lg"); })
+                .Location(location => { location.Add().Col(1).Row(2).Screen("xs sm"); });
+            items.Add().Html("<div class='footer'>Footer</div>")
+                .Location(location => { location.Add().Col(0).Row(2).Colspan(3).Screen("md lg"); })
+                .Location(location => { location.Add().Col(0).Row(3).Colspan(2).Screen("xs sm"); });
+        })
+        .SingleColumnScreen("xs")
     )
-)
+
+        </div>
+</div>
